@@ -5,6 +5,8 @@ const { JWT_ACCESS_SECRET_KEY, JWT_REFRESH_SECRET_KEY } = process.env;
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email);
+  console.log(password);
   const user = await User.findOne({ email });
 
   if (!user || !user.comparePassword(password)) {
