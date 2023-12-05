@@ -3,6 +3,7 @@ const { User, Session } = require('../models');
 const { JWT_ACCESS_SECRET_KEY } = process.env;
 const auth = async (req, res, next) => {
   const authorizationHeader = req.get('Authorization');
+  console.log("authorizationHeader: ", authorizationHeader);
   if (authorizationHeader) {
     const accessToken = authorizationHeader.replace('Bearer ', '');
     let payload = {};
@@ -11,7 +12,7 @@ const auth = async (req, res, next) => {
     } catch (err) {
       return res.status(401).send({ message: 'Unauthorized' });
     }
-
+    console.log("payload: ", payload);
     const user = await User.findById(payload.uid);
     const session = await Session.findById(payload.sid);
 
@@ -21,7 +22,7 @@ const auth = async (req, res, next) => {
     if (!session) {
       return res.status(404).send({ message: 'Invalid session' });
     }
-
+    console.log("user: ", user);
     req.user = user;
     req.session = session;
     next();
