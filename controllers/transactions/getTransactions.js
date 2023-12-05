@@ -9,7 +9,9 @@ const getTransactions = async (req, res) => {
       { owner },
       '-createdAt -updatedAt'
     ).populate('owner', '_id name email');
-    res.json(`info: ${JSON.stringify(result)}`);
+    res.json({
+      info: result
+    });
   } catch (error) {
     console.log(error);
     return error;
