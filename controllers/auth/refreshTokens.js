@@ -42,6 +42,8 @@ const refreshTokens = async (req, res) => {
       uid: user._id,
       sid: newSession._id,
     }, JWT_REFRESH_SECRET_KEY, { expiresIn: '30d' });
+    console.log("NEWREFRESH: ", refreshToken)
+    console.log("NEWACCESS: ", accessToken)
 
     res.json(
       {
