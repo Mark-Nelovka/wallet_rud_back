@@ -9,22 +9,30 @@ const refreshTokens = async (req, res) => {
   console.log("REFRESHTOKENFUNC:req.body.sid: ", req.body.sid);
   if (authorizationHeader) {
     const activeSession = await Session.findById(req.body.sid);
+    console.log("CHECKSESSION:activeSession: ", activeSession);
+
     if (!activeSession) {
+      console.log("!!!!CHECKSESSION:activeSession: ", activeSession);
       throw new NotFound('Invalid session');
     }
 
     const reqRefreshToken = authorizationHeader.replace('Bearer ', '');
+    console.log("!!!!reqRefreshTokenREPLACE:reqRefreshToken: ", reqRefreshToken);
+
 
     let payload = {};
     try {
       payload = jwt.verify(reqRefreshToken, JWT_REFRESH_SECRET_KEY);
+      console.log("!!!!VERIFY:payload: ", payload);
     } catch (err) {
       await Session.findByIdAndDelete(req.body.sid);
+      console.log("!!!!VERIFY:findByIdAndDelete: ", payload);
       throw new Unauthorized('Not authorized');
     }
 
     const user = await User.findById(payload.uid);
     const session = await Session.findById(payload.sid);
+
     if (!user) {
       throw new NotFound('Invalid user');
     }
@@ -32,10 +40,12 @@ const refreshTokens = async (req, res) => {
       throw new NotFound('Invalid session');
     }
 
-    await Session.findByIdAndDelete(payload.sid);
-    const newSession = await Session.create({
-      uid: user._id,
-    });
+      await Session.findByIdAndDelete(payload.sid);
+      const newSession = await Session.create({
+        uid: user._id,
+      });
+      console.log("newSession: ", newSession);
+
 
     const accessToken = jwt.sign({ uid: user._id, sid: newSession._id }, JWT_ACCESS_SECRET_KEY, { expiresIn: '1m' });
     const refreshToken = jwt.sign({
