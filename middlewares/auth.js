@@ -10,7 +10,10 @@ const auth = async (req, res, next) => {
     try {
       payload = jwt.verify(accessToken, JWT_ACCESS_SECRET_KEY);
     } catch (err) {
-      return res.status(401).send({ message: 'Unauthorized' });
+      return res.status(401).json({ 
+        statusCode: 401,
+        message: 'Unauthorized' 
+      });
     }
     console.log("payload: ", payload);
     const user = await User.findById(payload.uid);
