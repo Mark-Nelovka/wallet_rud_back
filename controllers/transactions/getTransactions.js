@@ -2,7 +2,7 @@ const { Transaction } = require('../../models');
 
 const getTransactions = async (req, res) => {
   const { _id: owner } = req.user;
-  console.log("req.user: ", req.user);
+  console.log("req.user: ", req);
   try {
     const result = await Transaction.find(
       { owner },
