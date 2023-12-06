@@ -37,7 +37,7 @@ const refreshTokens = async (req, res) => {
       uid: user._id,
     });
 
-    const accessToken = jwt.sign({ uid: user._id, sid: newSession._id }, JWT_ACCESS_SECRET_KEY, { expiresIn: '5h' });
+    const accessToken = jwt.sign({ uid: user._id, sid: newSession._id }, JWT_ACCESS_SECRET_KEY, { expiresIn: '1m' });
     const refreshToken = jwt.sign({
       uid: user._id,
       sid: newSession._id,
