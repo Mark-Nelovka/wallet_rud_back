@@ -5,6 +5,8 @@ const { JWT_ACCESS_SECRET_KEY, JWT_REFRESH_SECRET_KEY } = process.env;
 
 const refreshTokens = async (req, res) => {
   const authorizationHeader = req.get('Authorization');
+  console.log("authorizationHeader: ", authorizationHeader)
+  console.log("req.body.sid: ", req.body.sid);
   if (authorizationHeader) {
     const activeSession = await Session.findById(req.body.sid);
     if (!activeSession) {
@@ -35,8 +37,8 @@ const refreshTokens = async (req, res) => {
       uid: user._id,
     });
 
-    const newAccessToken = jwt.sign({ uid: user._id, sid: newSession._id }, JWT_ACCESS_SECRET_KEY, { expiresIn: '1h' });
-    const newRefreshToken = jwt.sign({
+    const accessToken = jwt.sign({ uid: user._id, sid: newSession._id }, JWT_ACCESS_SECRET_KEY, { expiresIn: '5h' });
+    const refreshToken = jwt.sign({
       uid: user._id,
       sid: newSession._id,
     }, JWT_REFRESH_SECRET_KEY, { expiresIn: '30d' });
@@ -46,9 +48,9 @@ const refreshTokens = async (req, res) => {
         status: 'success',
         code: 200,
         data: {
-          newSid: newSession._id,
-          newAccessToken,
-          newRefreshToken,
+          sid: newSession._id,
+          accessToken,
+          refreshToken,
         },
       },
     );
