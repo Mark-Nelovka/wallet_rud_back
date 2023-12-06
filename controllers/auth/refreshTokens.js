@@ -5,8 +5,8 @@ const { JWT_ACCESS_SECRET_KEY, JWT_REFRESH_SECRET_KEY } = process.env;
 
 const refreshTokens = async (req, res) => {
   const authorizationHeader = req.get('Authorization');
-  console.log("authorizationHeader: ", authorizationHeader)
-  console.log("req.body.sid: ", req.body.sid);
+  console.log("REFRESHTOKENFUNC:authorizationHeader: ", authorizationHeader)
+  console.log("REFRESHTOKENFUNC:req.body.sid: ", req.body.sid);
   if (authorizationHeader) {
     const activeSession = await Session.findById(req.body.sid);
     if (!activeSession) {

@@ -5,8 +5,6 @@ const { JWT_ACCESS_SECRET_KEY, JWT_REFRESH_SECRET_KEY } = process.env;
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email);
-  console.log(password);
   const user = await User.findOne({ email });
 
   if (!user || !user.comparePassword(password)) {
@@ -28,7 +26,8 @@ const login = async (req, res) => {
     { expiresIn: '30d' },
   );
   await User.findByIdAndUpdate(user._id);
-
+console.log("LOGINFUNCaccessToken: ", accessToken);
+console.log("LOGINFUNCrefreshToken: ", refreshToken);
   res.json({
     status: 'success',
     code: 200,
