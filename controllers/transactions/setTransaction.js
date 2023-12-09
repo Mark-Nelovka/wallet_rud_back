@@ -6,7 +6,7 @@ const setTransaction = async (req, res) => {
   console.log("req.body: ", req.body)
   try {
     const result = await Transaction.create({...req.body, owner})
-    const transactios = {
+    const transactions = {
       _id: result._id,
       date: result.date,
       type: result.type,
@@ -20,8 +20,9 @@ const setTransaction = async (req, res) => {
         email: req.user.email
       }
     }
+    console.log(transactions);
     res.status(201).json({
-      info: transactios
+      info: transactions
     });
   } catch (error) {
     return error;
@@ -31,8 +32,8 @@ const setTransaction = async (req, res) => {
 
 module.exports = setTransaction;
 // {
-//   "email": "test_email_test@ukr.net",
-//   "password": "password1Q"
+  // "email": "test_email_test@ukr.net",
+  // "password": "password1Q"
 // }
 // {
 //   "date": "Sat Dec 09 2023 16:24:25",
