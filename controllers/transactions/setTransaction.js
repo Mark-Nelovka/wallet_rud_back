@@ -22,7 +22,7 @@ const setTransaction = async (req, res) => {
     }
     console.log(transactions);
     res.status(201).json({
-      info: transactions
+      info: [transactions]
     });
   } catch (error) {
     return error;
