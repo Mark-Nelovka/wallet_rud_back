@@ -63,13 +63,15 @@ const getCategories = async (req, res) => {
       },
     },
   ]);
-
-  const result = [...expense, ...income];
+  
+  const newKeyExpense = {month: expense[0]._id.month, year: expense[0]._id.year, totalPrice: expense[0].totalPrice, category: expense[0].category};
+  const newKeyIncome = {month: income[0]._id.month, year: income[0]._id.year, totalPrice: income[0].totalPrice, category: income[0].category};
 
   res.status(200).json({
     statusCode: 200,
     message: "Success",
-    info: result
+    expense: newKeyExpense,
+    income: newKeyIncome
   });
 };
 
