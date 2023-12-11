@@ -32,8 +32,8 @@ const setTransaction = async (req, res) => {
 
 module.exports = setTransaction;
 // {
-  // "email": "test_email_test@ukr.net",
-  // "password": "password1Q"
+//   "email": "test_email_test@ukr.net",
+//   "password": "password1Q"
 // }
 // {
 //   "date": "Sat Dec 09 2023 16:24:25",

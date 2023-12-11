@@ -54,13 +54,23 @@ const getCategories = async (req, res) => {
         totalPrice: {
           $sum: '$sum',
         },
+        category: {
+          $push: {
+            category: '$category',
+            sum: '$sum',
+          },
+        },
       },
     },
   ]);
 
   const result = [...expense, ...income];
 
-  res.status(200).json(result);
+  res.status(200).json({
+    statusCode: 200,
+    message: "Success",
+    info: result
+  });
 };
 
 module.exports = getCategories;
